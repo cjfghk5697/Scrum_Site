@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { changeInput, insert, toggle, remove } from '../modules/todos';
+import { changeInput, insert, toggle, remove, move } from '../modules/todos';
 import Todos from '../components/Todos';
 import useActions from '../lib/useActions';
 
@@ -10,8 +10,8 @@ const TodosContainer = () => {
     todos: todos.todos
   }));
 
-  const [onChangeInput, onInsert, onToggle, onRemove] = useActions(
-    [changeInput, insert, toggle, remove],
+  const [onChangeInput, onInsert, onToggle, onRemove, onMove] = useActions(
+    [changeInput, insert, toggle, remove, move],
     []
   );
 
@@ -23,6 +23,7 @@ const TodosContainer = () => {
       onInsert={onInsert}
       onToggle={onToggle}
       onRemove={onRemove}
+	  onMove={onMove}
     />
   );
 };

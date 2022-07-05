@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TodoItem = ({ todo, onToggle, onRemove }) => {
+const TodoItem = ({ todo, onToggle, onRemove,onMove }) => {
   return (
     <div>
       <input
@@ -12,7 +12,12 @@ const TodoItem = ({ todo, onToggle, onRemove }) => {
       <span style={{ textDecoration: todo.done ? 'line-through' : 'none' }}>
         {todo.text}
       </span>
+	  <span>:</span>
+	  <span>
+	   {todo.mode}
+	  </span>
       <button onClick={() => onRemove(todo.id)}>삭제</button>
+	  <button onClick={() => onMove(todo.id)}>옮기기</button>
     </div>
   );
 };
@@ -24,6 +29,7 @@ const Todos = ({
   onInsert,
   onToggle,
   onRemove,
+  onMove,
 }) => {
   const onSubmit = e => {
     e.preventDefault();
@@ -44,6 +50,7 @@ const Todos = ({
             key={todo.id}
             onToggle={onToggle}
             onRemove={onRemove}
+			onMove={onMove}
           />
         ))}
       </div>
