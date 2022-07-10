@@ -1,24 +1,30 @@
 import React from 'react';
+import {MdAdd,MdCheckBoxOutlineBlank,MdCheckBox,MdRemoveCircleOutline}  from 'react-icons/md'
+import { AiOutlineDelete,AiOutlineRight} from 'react-icons/ai'
+import './TodoTemplate.scss';
+import './TodoInsert.scss';
+import cn from 'classnames';
 
 const TodoItem = ({ todo, onToggle, onRemove,onMove }) => {
+   const {checked}=todo.done;
   return (
-    <div>
-      <input
+    <div className="TodoListItem">
+      <div
         type="checkbox"
         onClick={() => onToggle(todo.id)}
         checked={todo.done}
         readOnly={true}
-      />
-      <span style={{ textDecoration: todo.done ? 'line-through' : 'none' }}>
-        {todo.text}
-      </span>
-	  <span>:</span>
-	  <span>
-	   {todo.mode}
-	  </span>
-      <button onClick={() => onRemove(todo.id)}>삭제</button>
-	  <button onClick={() => onMove(todo.id)}>옮기기</button>
-    </div>
+		className={cn('checkbox', {checked})}
+      >
+		{ todo.done ? <MdCheckBox/> : <MdCheckBoxOutlineBlank/> }
+        <div className="text">{todo.text}</div>
+	</div>
+		  <button className="remove" onClick={() => onRemove(todo.id)}><AiOutlineDelete/></button>
+	  <button onClick={() => onMove(todo.id)}><AiOutlineRight/></button>
+		  <br/>
+	    <div className="text">{todo.mode}</div>
+
+	 </div>
   );
 };
 
@@ -38,10 +44,14 @@ const Todos = ({
   };
   const onChange = e => onChangeInput(e.target.value);
   return (
-    <div>
-      <form onSubmit={onSubmit}>
+
+    <div className="TodoTemplate">
+	<div className="app-title">
+		Scrum
+	 </div>
+	<form onSubmit={onSubmit}>
         <input value={input} onChange={onChange} />
-        <button type="submit">등록</button>
+        <button type="submit"><MdAdd/></button>
       </form>
       <div>
         {todos.map(todo => (
