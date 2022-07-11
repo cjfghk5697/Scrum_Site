@@ -3,30 +3,35 @@ import {MdAdd,MdCheckBoxOutlineBlank,MdCheckBox,MdRemoveCircleOutline}  from 're
 import { AiOutlineDelete,AiOutlineRight} from 'react-icons/ai'
 import './TodoTemplate.scss';
 import './TodoInsert.scss';
+import './TodoListItem.scss';
+import './TodoList.scss';
+import clsx from "clsx"
 import cn from 'classnames';
 
 const TodoItem = ({ todo, onToggle, onRemove,onMove }) => {
-   const {checked}=todo.done;
+
   return (
     <div className="TodoListItem">
       <div
-        type="checkbox"
         onClick={() => onToggle(todo.id)}
         checked={todo.done}
         readOnly={true}
-		className={cn('checkbox', {checked})}
+		className={cn('checkbox', todo.done)}
       >
-		{ todo.done ? <MdCheckBox/> : <MdCheckBoxOutlineBlank/> }
-        <div className="text">{todo.text}</div>
-	</div>
-		  <button className="remove" onClick={() => onRemove(todo.id)}><AiOutlineDelete/></button>
-	  <button onClick={() => onMove(todo.id)}><AiOutlineRight/></button>
-		  <br/>
-	    <div className="text">{todo.mode}</div>
+			{ todo.done ? <MdCheckBox/> : <MdCheckBoxOutlineBlank/> }
+        	<div style={{textDecoration:todo.done?'line-through':'none'}}>
+				{todo.text}    {todo.mode}
+			</div>
+		</div>
+	<button className="remove" onClick={() => onRemove(todo.id)}><AiOutlineDelete/></button>
+	<button onClick={() => onMove(todo.id)}><AiOutlineRight/></button>
+	  </div>
 
-	 </div>
+
+
   );
 };
+
 
 const Todos = ({
   input, // 인풋에 입력되는 텍스트
@@ -46,23 +51,95 @@ const Todos = ({
   return (
 
     <div className="TodoTemplate">
-	<div className="app-title">
+		<div className="app-title">
 		Scrum
-	 </div>
-	<form onSubmit={onSubmit}>
-        <input value={input} onChange={onChange} />
-        <button type="submit"><MdAdd/></button>
-      </form>
-      <div>
-        {todos.map(todo => (
-          <TodoItem
-            todo={todo}
-            key={todo.id}
-            onToggle={onToggle}
-            onRemove={onRemove}
-			onMove={onMove}
-          />
+	 	</div>
+		  
+		<div>
+			<form onSubmit={onSubmit} className="TodoInsert">
+        	<input placeholder="할일 입력" value={input} onChange={onChange} />
+        	<button type="submit"><MdAdd/></button>
+      		</form>
+      	</div>
+		  
+
+		  	  
+		<div className="TodoList">
+		<div>
+			<table>
+      			<thead>
+        			<tr>
+         	 			<th>ice box</th><th>emergency</th><th>in progress</th><th>testing</th><th>complete</th>
+        			</tr>
+      			</thead>
+				      <tbody>
+        <tr>
+          <td>
+        	 {todos.filter(todo => todo.mode.includes('IceBox')).map(todo => (
+          		<TodoItem
+            	todo={todo}
+            	key={todo.id}
+            	onToggle={onToggle}
+            	onRemove={onRemove}
+				onMove={onMove}
+				className={todo.mode}
+          	/>
         ))}
+		</td>
+		<td>
+        	 {todos.filter(todo => todo.mode.includes('Emergency')).map(todo => (
+          		<TodoItem
+            	todo={todo}
+            	key={todo.id}
+            	onToggle={onToggle}
+            	onRemove={onRemove}
+				onMove={onMove}
+				className={todo.mode}
+          	/>
+        ))}
+		</td>
+		<td>
+        	 {todos.filter(todo => todo.mode.includes('InProgress')).map(todo => (
+          		<TodoItem
+            	todo={todo}
+            	key={todo.id}
+            	onToggle={onToggle}
+            	onRemove={onRemove}
+				onMove={onMove}
+				className={todo.mode}
+          	/>
+        ))}
+		</td>
+		<td>
+        	 {todos.filter(todo => todo.mode.includes('Testing')).map(todo => (
+          		<TodoItem
+            	todo={todo}
+            	key={todo.id}
+            	onToggle={onToggle}
+            	onRemove={onRemove}
+				onMove={onMove}
+				className={todo.mode}
+          	/>
+        ))}
+		</td>
+		<td>
+        	 {todos.filter(todo => todo.mode.includes('Complete')).map(todo => (
+          		<TodoItem
+            	todo={todo}
+            	key={todo.id}
+            	onToggle={onToggle}
+            	onRemove={onRemove}
+				onMove={onMove}
+				className={todo.mode}
+          	/>
+        ))}
+		</td>
+        </tr>
+
+      	</tbody>
+
+			</table>
+		</div>
       </div>
     </div>
   );

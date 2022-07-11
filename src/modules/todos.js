@@ -26,23 +26,23 @@ export const move = createAction(MOVE, id => id);
 const mode = [
 	{
       id: 1,
-      mode: 'ice box',
+      mode: 'IceBox',
     },
     {
       id: 2,
-      mode: 'emergency',
+      mode: 'Emergency',
     },
     {
       id: 3,
-      mode: 'in progress',
+      mode: 'InProgress',
     },
 	{
       id: 4,
-      mode: 'testing',
+      mode: 'Testing',
     },
 	{
       id: 5,
-      mode: 'complete',
+      mode: 'Complete',
     }
   ];
 	
