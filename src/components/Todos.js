@@ -7,7 +7,7 @@ import './TodoListItem.scss';
 import './TodoList.scss';
 import clsx from "clsx"
 import cn from 'classnames';
-
+import './Table.css';
 const TodoItem = ({ todo, onToggle, onRemove,onMove }) => {
 
   return (
@@ -72,8 +72,6 @@ const Todos = ({
          	 			<th>ice box</th><th>emergency</th><th>in progress</th><th>testing</th><th>complete</th>
         			</tr>
       			</thead>
-				      <tbody>
-        <tr>
           <td>
         	 {todos.filter(todo => todo.mode.includes('IceBox')).map(todo => (
           		<TodoItem
@@ -82,7 +80,6 @@ const Todos = ({
             	onToggle={onToggle}
             	onRemove={onRemove}
 				onMove={onMove}
-				className={todo.mode}
           	/>
         ))}
 		</td>
@@ -94,7 +91,6 @@ const Todos = ({
             	onToggle={onToggle}
             	onRemove={onRemove}
 				onMove={onMove}
-				className={todo.mode}
           	/>
         ))}
 		</td>
@@ -106,7 +102,6 @@ const Todos = ({
             	onToggle={onToggle}
             	onRemove={onRemove}
 				onMove={onMove}
-				className={todo.mode}
           	/>
         ))}
 		</td>
@@ -118,7 +113,6 @@ const Todos = ({
             	onToggle={onToggle}
             	onRemove={onRemove}
 				onMove={onMove}
-				className={todo.mode}
           	/>
         ))}
 		</td>
@@ -130,13 +124,9 @@ const Todos = ({
             	onToggle={onToggle}
             	onRemove={onRemove}
 				onMove={onMove}
-				className={todo.mode}
           	/>
         ))}
 		</td>
-        </tr>
-
-      	</tbody>
 
 			</table>
 		</div>
