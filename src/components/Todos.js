@@ -1,14 +1,17 @@
-import React from 'react';
-import {MdAdd,MdCheckBoxOutlineBlank,MdCheckBox,MdRemoveCircleOutline}  from 'react-icons/md'
+import React,{useState} from 'react';
+import {MdAdd,MdCheckBoxOutlineBlank,MdCheckBox}  from 'react-icons/md'
 import { AiOutlineDelete,AiOutlineRight} from 'react-icons/ai'
 import './TodoTemplate.scss';
 import './TodoInsert.scss';
 import './TodoListItem.scss';
 import './TodoList.scss';
-import clsx from "clsx"
 import cn from 'classnames';
 import './Table.css';
-const TodoItem = ({ todo, onToggle, onRemove,onMove }) => {
+import "react-datepicker/dist/react-datepicker.css"
+import DatePicker from "react-datepicker";
+
+
+const TodoItem = ({ todo,  onToggle, onRemove,onMove }) => {
 
   return (
     <div className="TodoListItem">
@@ -20,7 +23,9 @@ const TodoItem = ({ todo, onToggle, onRemove,onMove }) => {
       >
 			{ todo.done ? <MdCheckBox/> : <MdCheckBoxOutlineBlank/> }
         	<div style={{textDecoration:todo.done?'line-through':'none'}}>
-				{todo.text}    {todo.mode}
+				{todo.text}    {todo.mode} 
+		  	<p>마감 시한 : {todo.time.getFullYear()}/ {todo.time.getMonth() + 1} / {todo.time.getDate()}</p>
+				
 			</div>
 		</div>
 	<button className="remove" onClick={() => onRemove(todo.id)}><AiOutlineDelete/></button>
@@ -32,22 +37,32 @@ const TodoItem = ({ todo, onToggle, onRemove,onMove }) => {
   );
 };
 
-
 const Todos = ({
-  input, // 인풋에 입력되는 텍스트
-  todos, // 할 일 목록이 들어있는 객체
+  input,
+  time,// 인풋에 입력되는 텍스트
+  todos,// 할 일 목록이 들어있는 객체
   onChangeInput,
+  onChangeDate,
   onInsert,
   onToggle,
   onRemove,
   onMove,
+
 }) => {
+
   const onSubmit = e => {
     e.preventDefault();
-    onInsert(input);
+    onInsert(input,time=date);
     onChangeInput(''); // 등록 후 인풋 초기화
   };
   const onChange = e => onChangeInput(e.target.value);
+	
+  const onTime = date => {
+	  onChangeDate(date);
+	  setDate(date);
+  };
+  const [date,setDate]=useState(new Date());
+
   return (
 
     <div className="TodoTemplate">
@@ -57,9 +72,11 @@ const Todos = ({
 		  
 		<div>
 			<form onSubmit={onSubmit} className="TodoInsert">
-        	<input placeholder="할일 입력" value={input} onChange={onChange} />
-        	<button type="submit"><MdAdd/></button>
+        		<input placeholder="할일 입력" value={input} onChange={onChange} />
+				<DatePicker selected={date} value={date} onChange={(date)=>onTime(date)} ></DatePicker>
+				<button type="submit"><MdAdd/></button>
       		</form>
+
       	</div>
 		  
 

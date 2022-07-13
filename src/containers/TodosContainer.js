@@ -1,17 +1,18 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { changeInput, insert, toggle, remove, move } from '../modules/todos';
+import { changeInput,changeDate, insert, toggle, remove, move } from '../modules/todos';
 import Todos from '../components/Todos';
 import useActions from '../lib/useActions';
 
 const TodosContainer = () => {
-  const { input, todos } = useSelector(({ todos }) => ({
+  const { input, todos, time } = useSelector(({ todos }) => ({
     input: todos.input,
-    todos: todos.todos
+    todos: todos.todos,
+	time:todos.time,
   }));
 
-  const [onChangeInput, onInsert, onToggle, onRemove, onMove] = useActions(
-    [changeInput, insert, toggle, remove, move],
+  const [onChangeInput,onChangeDate ,onInsert, onToggle, onRemove, onMove] = useActions(
+    [changeInput,changeDate, insert, toggle, remove, move],
     []
   );
 
@@ -19,7 +20,9 @@ const TodosContainer = () => {
     <Todos
       input={input}
       todos={todos}
+	  time={time}
       onChangeInput={onChangeInput}
+	  onChangeDate={onChangeDate}
       onInsert={onInsert}
       onToggle={onToggle}
       onRemove={onRemove}

@@ -7,5 +7,8 @@
     border: 1px solid #444444;
 	width:320px;
 	height:60px;  
+	min-height: 320px;
+  	max-height: 513px;
+  	overflow-y: auto;
 }
 

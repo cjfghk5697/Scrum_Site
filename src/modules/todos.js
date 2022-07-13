@@ -6,22 +6,30 @@ const INSERT = 'todos/INSERT'; // 새로운 todo 를 등록함
 const TOGGLE = 'todos/TOGGLE'; // todo 를 체크/체크해제 함
 const REMOVE = 'todos/REMOVE'; // todo 를 제거함
 const MOVE = 'todos/MOVE'; // todo 를 제거함
+const CHANGE_DATE = 'todos/CHANGE_DATE'; // 
 
 export const changeInput = createAction(CHANGE_INPUT, input => input);
+export const changeDate = createAction(CHANGE_DATE, date => date);
 
 let mode_index=0;
 let id = 3; // insert 가 호출 될 때마다 1씩 더해집니다.
-export const insert = createAction(INSERT, text => ({
+const date=new Date();
+
+
+
+export const insert = createAction(INSERT, (text,time) => ({
   id: id++,
   text,
   done: false,
   mode_index:0,
-  mode:mode[mode_index].mode
+  mode:mode[mode_index].mode,
+  time,
 }));
 
 export const toggle = createAction(TOGGLE, id => id);
 export const remove = createAction(REMOVE, id => id);
 export const move = createAction(MOVE, id => id);
+
 
 const mode = [
 	{
@@ -45,7 +53,7 @@ const mode = [
       mode: 'Complete',
     }
   ];
-	
+
 const initialState = {
   input: '',
   todos: [
@@ -55,7 +63,7 @@ const initialState = {
       done: true,
 	  mode_index:1,
 	  mode:mode[mode_index].mode,
-
+	  time:date
     },
     {
       id: 2,
@@ -63,8 +71,7 @@ const initialState = {
       done: false,
 	  mode_index:0,
 	  mode:mode[mode_index].mode,
-
-
+	  time:date
     },
   ],
 };
@@ -74,6 +81,10 @@ const todos = handleActions(
     [CHANGE_INPUT]: (state, { payload: input }) =>
       produce(state, draft => {
         draft.input = input;
+      }),
+    [CHANGE_DATE]: (state, { payload: time }) =>
+      produce(state, draft => {
+        draft.time = time;
       }),
     [INSERT]: (state, { payload: todo }) =>
       produce(state, draft => {
