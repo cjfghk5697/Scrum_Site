@@ -61,7 +61,7 @@ const initialState = {
       id: 1,
       text: '리덕스 기초 배우기',
       done: true,
-	  mode_index:1,
+	  mode_index:0,
 	  mode:mode[mode_index].mode,
 	  time:date
     },
